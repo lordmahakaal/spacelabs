@@ -1,19 +1,60 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { Resend } from 'resend'
-
 export const runtime = 'edge';
 
-export async function POST(request: NextRequest) {
-  try {
-    const { name, email, message } = await request.json()
+import { Resend } from 'resend'
 
-    // Validate input
-    if (!name || !email || !message) {
-      return NextResponse.json(
-        { error: 'Missing required fields' },
-        { status: 400 }
-      )
+export async function POST(request: Request) {
+  const { name, email, message } = await request.json()
+
+  if (!name || !email || !message) {
+    return new Response(JSON.stringify({ error: 'Missing required fields' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' }
+    })
+  }
+
+
+  if (!process.env.RESEND_API_KEY) {
+    return new Response(JSON.stringify({ error: 'Email service not configured' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' }
+    })
+  }
+
+
+  try {
+    const resend = new Resend(process.env.RESEND_API_KEY)
+
+    const { data, error } = await resend.emails.send({
+      from: 'onboarding@resend.dev',
+      to: 'vishnusashi999@gmail.com',
+      subject: `New Contact Form Submission from ${name}`,
+      html: `
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Message:</strong> ${message}</p>
+      `
+    })
+
+    if (error) {
+      return new Response(JSON.stringify({ error: 'Failed to send email' }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' }
+      })
     }
+
+
+    return new Response(JSON.stringify({ success: true, data }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' }
+    })
+  } catch (error) {
+    return new Response(JSON.stringify({ error: 'Failed to send email' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' }
+    })
+  }
+}
 
     // Check if RESEND_API_KEY is configured
     if (!process.env.RESEND_API_KEY) {

@@ -1,13 +1,13 @@
 "use client"
 
 import { useState } from "react"
-import { Canvas } from "@react-three/fiber"
+// Canvas import removed (3D scene not used)
 import { Manrope } from "next/font/google"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
 import dynamic from "next/dynamic"
 import React, { Suspense } from "react"
-const Scene = dynamic(() => import("@/components/Scene"), { ssr: false })
+// Dynamic import of 3D Scene removed
 import Solutions from "@/components/Solutions"
 import Industries from "@/components/Industries"
 import Technology from "@/components/Technology"
@@ -49,15 +49,7 @@ export default function Home() {
         </nav>
       </header>
 
-      <div className="absolute inset-0 z-0">
-        <Canvas shadows camera={{ position: [0, 0, 20], fov: 50 }}>
-          <ErrorBoundary fallback={<FallbackMessage message="3D scene failed to load" />}>
-            <Suspense fallback={<LoadingMessage message="Loading 3D scene..." />}>
-              <Scene />
-            </Suspense>
-          </ErrorBoundary>
-        </Canvas>
-      </div>
+      <div className="absolute inset-0 z-0 bg-black/30" />
 
       <AnimatePresence mode="wait">
         <motion.div
