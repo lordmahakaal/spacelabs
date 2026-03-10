@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest, Response } from 'next/server'
 export const runtime = 'edge';
 
 import { Resend } from 'resend'
@@ -59,7 +59,7 @@ export async function POST(request: Request) {
     // Check if RESEND_API_KEY is configured
     if (!process.env.RESEND_API_KEY) {
       console.error('RESEND_API_KEY is not configured')
-      return NextResponse.json(
+      return Response.json(
         { error: 'Email service is not configured' },
         { status: 500 }
       )
@@ -105,19 +105,19 @@ export async function POST(request: Request) {
 
     if (result.error) {
       console.error('[v0] Error sending email:', result.error)
-      return NextResponse.json(
+      return Response.json(
         { error: 'Failed to send email', details: result.error },
         { status: 500 }
       )
     }
 
-    return NextResponse.json(
+    return Response.json(
       { success: true, message: 'Email sent successfully', messageId: result.data?.id },
       { status: 200 }
     )
   } catch (error) {
     console.error('[v0] Error sending email:', error)
-    return NextResponse.json(
+    return Response.json(
       { error: 'Failed to send email', details: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }
     )
