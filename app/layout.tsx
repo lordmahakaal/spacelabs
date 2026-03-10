@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   description: 'Spacelabs is a non-profit organization providing comprehensive inference services for open-source AI models. Fight for freedom with cutting-edge AI solutions.',
   keywords: 'AI, open-source, inference, non-profit, machine learning, democratizing AI',
   generator: 'v0.app',
+  verification: {
+    yandex: 'bd22edcc3f60eab0',
+  },
   openGraph: {
     title: 'Spacelabs - Democratizing AI for Everyone',
     description: 'Comprehensive inference services for open-source AI models and cutting edge solutions for everyone',
