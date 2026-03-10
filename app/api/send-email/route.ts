@@ -1,4 +1,4 @@
-import { NextRequest, Response } from 'next/server'
+import { NextResponse } from 'next/server'
 export const runtime = 'edge';
 
 import { Resend } from 'resend'
@@ -7,18 +7,12 @@ export async function POST(request: Request) {
   const { name, email, message } = await request.json()
 
   if (!name || !email || !message) {
-    return new Response(JSON.stringify({ error: 'Missing required fields' }), {
-      status: 400,
-      headers: { 'Content-Type': 'application/json' }
-    })
+    return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
   }
 
 
   if (!process.env.RESEND_API_KEY) {
-    return new Response(JSON.stringify({ error: 'Email service not configured' }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' }
-    })
+    return NextResponse.json({ error: 'Email service not configured' }, { status: 500 })
   }
 
 
@@ -26,49 +20,6 @@ export async function POST(request: Request) {
     const resend = new Resend(process.env.RESEND_API_KEY)
 
     const { data, error } = await resend.emails.send({
-      from: 'onboarding@resend.dev',
-      to: 'vishnusashi999@gmail.com',
-      subject: `New Contact Form Submission from ${name}`,
-      html: `
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Message:</strong> ${message}</p>
-      `
-    })
-
-    if (error) {
-      return new Response(JSON.stringify({ error: 'Failed to send email' }), {
-        status: 500,
-        headers: { 'Content-Type': 'application/json' }
-      })
-    }
-
-
-    return new Response(JSON.stringify({ success: true, data }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' }
-    })
-  } catch (error) {
-    return new Response(JSON.stringify({ error: 'Failed to send email' }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' }
-    })
-  }
-}
-
-    // Check if RESEND_API_KEY is configured
-    if (!process.env.RESEND_API_KEY) {
-      console.error('RESEND_API_KEY is not configured')
-      return Response.json(
-        { error: 'Email service is not configured' },
-        { status: 500 }
-      )
-    }
-
-    // Send email using verified email address
-    // In production, configure a custom domain at resend.com/domains and use that
-    const resend = new Resend(process.env.RESEND_API_KEY);
-    const result = await resend.emails.send({
       from: 'onboarding@resend.dev',
       to: 'vishnusashi999@gmail.com',
       replyTo: email,
@@ -100,26 +51,13 @@ export async function POST(request: Request) {
       `,
     })
 
-    // Log the result for debugging
-    console.log('[v0] Email sent result:', result)
-
-    if (result.error) {
-      console.error('[v0] Error sending email:', result.error)
-      return Response.json(
-        { error: 'Failed to send email', details: result.error },
-        { status: 500 }
-      )
+    if (error) {
+      return NextResponse.json({ error: 'Failed to send email', details: error }, { status: 500 })
     }
 
-    return Response.json(
-      { success: true, message: 'Email sent successfully', messageId: result.data?.id },
-      { status: 200 }
-    )
+
+    return NextResponse.json({ success: true, message: 'Email sent successfully', messageId: data?.id }, { status: 200 })
   } catch (error) {
-    console.error('[v0] Error sending email:', error)
-    return Response.json(
-      { error: 'Failed to send email', details: error instanceof Error ? error.message : 'Unknown error' },
-      { status: 500 }
-    )
+    return NextResponse.json({ error: 'Failed to send email', details: error instanceof Error ? error.message : 'Unknown error' }, { status: 500 })
   }
 }
