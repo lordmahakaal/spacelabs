@@ -1,0 +1,27 @@
+{
+  "identifier": "spacelabs",
+  "name": "Spacelabs AI Platform",
+  "description": "AI Model Comparison and Workflow Platform",
+  "urls": {
+    "homepage": "https://spacelabs.pro",
+    "documentation": "https://spacelabs.pro/api/models",
+    "api": "https://spacelabs.pro/api"
+  },
+  "capabilities": {
+    "models": {
+      "list": "/api/models",
+      "run": "/api/run"
+    },
+    "workflows": {
+      "list": "/api/workflows"
+    },
+    "comparison": {
+      "compare": "/api/compare"
+    }
+  },
+  "models": [
+    "gpt-4", "gpt-4o", "grok-2", "gemini-pro", 
+    "claude-3-opus", "deepseek-v2", "llama-3-70b", "mistral-large"
+  ],
+  "version": "1.0.0"
+}

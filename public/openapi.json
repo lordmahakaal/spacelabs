@@ -1,0 +1,114 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Spacelabs AI Platform API",
+    "description": "AI Model Comparison and Workflow Platform API",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Spacelabs Support",
+      "url": "https://spacelabs.pro/contact"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://spacelabs.pro",
+      "description": "Production server"
+    }
+  ],
+  "paths": {
+    "/api/models": {
+      "get": {
+        "summary": "List all available AI models",
+        "description": "Returns a list of all available AI models with their specifications",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "count": 8,
+                  "models": []
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/workflows": {
+      "get": {
+        "summary": "List all workflows",
+        "description": "Returns a list of all available pre-built workflows",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/run": {
+      "post": {
+        "summary": "Run AI model",
+        "description": "Execute an AI model with a given prompt",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "model": {
+                    "type": "string",
+                    "description": "AI model to use"
+                  },
+                  "prompt": {
+                    "type": "string",
+                    "description": "Input prompt"
+                  }
+                }
+              },
+              "example": {
+                "model": "gpt-4",
+                "prompt": "Hello, how are you?"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/compare": {
+      "get": {
+        "summary": "Compare AI models",
+        "description": "Compare specifications of two AI models",
+        "parameters": [
+          {
+            "name": "model1",
+            "in": "query",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "model2", 
+            "in": "query",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    { "name": "Models", "description": "AI Model endpoints" },
+    { "name": "Workflows", "description": "Workflow endpoints" },
+    { "name": "Comparison", "description": "Model comparison endpoints" }
+  ]
+}

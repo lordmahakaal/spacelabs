@@ -1,0 +1,48 @@
+{
+  "examples": [
+    {
+      "id": "gpt-vs-grok",
+      "title": "GPT-4 vs Grok-2 Comparison",
+      "description": "Compare responses from two leading AI models",
+      "url": "/compare/gpt-4-vs-grok-2",
+      "category": "comparison"
+    },
+    {
+      "id": "run-gpt",
+      "title": "Run GPT Model",
+      "description": "Execute prompts using GPT-4",
+      "url": "/tutorials/run-gpt",
+      "category": "tutorial"
+    },
+    {
+      "id": "run-grok",
+      "title": "Run Grok Model",
+      "description": "Execute prompts using Grok-2",
+      "url": "/tutorials/run-grok",
+      "category": "tutorial"
+    },
+    {
+      "id": "api-models",
+      "title": "List Available Models",
+      "description": "Get all available AI models via API",
+      "url": "/api/models",
+      "category": "api"
+    },
+    {
+      "id": "api-workflows",
+      "title": "List Workflows",
+      "description": "Get all available workflows via API",
+      "url": "/api/workflows",
+      "category": "api"
+    },
+    {
+      "id": "multi-model-workflow",
+      "title": "Multi-Model Workflow",
+      "description": "Run queries across multiple AI models simultaneously",
+      "url": "/tutorials/multi-model-workflow",
+      "category": "tutorial"
+    }
+  ],
+  "categories": ["comparison", "tutorial", "api"],
+  "last_updated": "2026-03-10T00:00:00.000Z"
+}
