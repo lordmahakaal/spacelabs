@@ -1,13 +1,13 @@
 "use client"
 
 import { useState } from "react"
-// Canvas import removed (3D scene not used)
+import { Canvas } from "@react-three/fiber"
 import { Manrope } from "next/font/google"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
 import dynamic from "next/dynamic"
 import React, { Suspense } from "react"
-// Dynamic import of 3D Scene removed
+const Scene = dynamic(() => import("@/components/Scene"), { ssr: false })
 import Solutions from "@/components/Solutions"
 import Industries from "@/components/Industries"
 import Technology from "@/components/Technology"
@@ -23,18 +23,18 @@ export default function Home() {
     <div className={`relative w-full min-h-screen overflow-hidden bg-black text-white ${manrope.className}`}>
       <header className="fixed top-0 left-0 right-0 z-50 p-4 bg-black/80 backdrop-blur-md">
         <nav className="flex justify-between items-center max-w-7xl mx-auto">
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 md:gap-4">
             <Link href="/" onClick={() => setActiveTab("home")}>
               <Image
                 src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-01-19%20at%201.23.00%E2%80%AFPM%20(1).jpeg-NZoZj9kFAQGTgMvuCq1KQupInSwLyi.png"
                 alt="Spacelabs Logo"
                 width={300}
                 height={120}
-                className="w-auto h-20"
+                className="w-auto h-12 md:h-20"
               />
             </Link>
           </div>
-          <ul className="flex space-x-8">
+          <ul className="flex space-x-3 md:space-x-8 text-xs md:text-base">
             {["Solutions", "Industries", "Technology", "Contact"].map((tab) => (
               <li key={tab}>
                 <button
@@ -49,7 +49,15 @@ export default function Home() {
         </nav>
       </header>
 
-      <div className="absolute inset-0 z-0 bg-black/30" />
+      <div className="absolute inset-0 z-0">
+        <Canvas shadows camera={{ position: [0, 0, 20], fov: 50 }}>
+          <ErrorBoundary fallback={<FallbackMessage message="3D scene failed to load" />}>
+            <Suspense fallback={<LoadingMessage message="Loading 3D scene..." />}>
+              <Scene />
+            </Suspense>
+          </ErrorBoundary>
+        </Canvas>
+      </div>
 
       <AnimatePresence mode="wait">
         <motion.div
@@ -58,15 +66,15 @@ export default function Home() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.3 }}
-          className="relative z-10 min-h-screen pt-32 flex items-center justify-center"
+          className="relative z-10 min-h-screen pt-20 md:pt-32 flex items-center justify-center px-2 md:px-4"
         >
           {activeTab === "home" && (
-            <div className="text-center">
+            <div className="text-center px-2">
               <motion.h1
                 initial={{ y: -50, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.2, duration: 0.8 }}
-                className="text-7xl font-bold mb-4 max-w-4xl mx-auto"
+                className="text-3xl md:text-5xl lg:text-7xl font-bold mb-2 md:mb-4 max-w-4xl mx-auto"
               >
                 Democratizing AI for Everyone
               </motion.h1>
@@ -74,7 +82,7 @@ export default function Home() {
                 initial={{ y: 50, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.4, duration: 0.8 }}
-                className="text-2xl mb-10 max-w-2xl mx-auto text-gray-300"
+                className="text-sm md:text-xl lg:text-2xl mb-4 md:mb-10 max-w-2xl mx-auto text-gray-300"
               >
                 Comprehensive inference services for open-source AI models and cutting edge solutions for everyone
               </motion.h2>
@@ -82,7 +90,7 @@ export default function Home() {
                 initial={{ y: 50, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.6, duration: 0.8 }}
-                className="text-lg max-w-2xl mx-auto text-gray-400"
+                className="text-xs md:text-lg max-w-2xl mx-auto text-gray-400"
               >
                 A non-profit organization fighting for freedom and open access to advanced AI technology
               </motion.p>
