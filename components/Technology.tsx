@@ -26,13 +26,13 @@ export default function Technology() {
         <div className="bg-white/5 p-6 rounded-lg hover:bg-white/10 transition-colors">
           <h3 className="text-2xl font-bold mb-4">Advanced Model Architecture</h3>
           <p className="text-gray-300 mb-4">
-            Our platform features a massive 1 trillion (1T) parameter model with a groundbreaking 1 million context window, enabling unprecedented understanding and generation capabilities. Additionally, we offer ScrapeGoat-Tiny-Brain local models optimized to run on CPU, providing privacy-preserving inference without requiring expensive GPU infrastructure.
+            Our platform features Scrapegoat-Pro-V2, a massive 1 trillion (1T) parameter model with a groundbreaking 1 million context window, enabling unprecedented understanding and generation capabilities. Additionally, we offer ScrapeGoat-Tiny-Brain local models optimized to run on CPU, providing privacy-preserving inference without requiring expensive GPU infrastructure. We are the first to achieve this level of performance with a local model.
           </p>
         </div>
         <div className="bg-white/5 p-6 rounded-lg hover:bg-white/10 transition-colors">
           <h3 className="text-2xl font-bold mb-4">ExCoder AI Development Platform</h3>
           <p className="text-gray-300 mb-4">
-            Our sister platform <a href="https://excoder.pro" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">ExCoder</a> leverages autonomous agents and advanced AI capabilities to revolutionize software development, enabling intelligent code generation, debugging, and optimization at scale.
+            Our sister platform <a href="https://excoder.pro" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">ExCoder</a> leverages autonomous agents and advanced AI capabilities to revolutionize software development, enabling intelligent code generation, debugging, and optimization at scale. We are the first to achieve this level of performance with a local models. This solution can be run by our AI Tools Orchestrator Super Intelligent Agent; Making it end to end autonomous solution.
           </p>
         </div>
         <div className="bg-white/5 p-6 rounded-lg hover:bg-white/10 transition-colors">
