@@ -38,7 +38,7 @@ export default function Technology() {
         <div className="bg-white/5 p-6 rounded-lg hover:bg-white/10 transition-colors">
           <h3 className="text-2xl font-bold mb-4">Infrastructure</h3>
           <p className="text-gray-300 mb-4">
-            Deployment of 40 high-performance GPU servers to ensure scalable and efficient AI processing. Our infrastructure supports both cloud-based inference for maximum performance and edge-computing local models for privacy and minimal latency.
+            Deployment of 40 high-performance GPU servers to ensure scalable and efficient AI processing. Our infrastructure supports both cloud-based inference for maximum performance and edge-computing local models for privacy and minimal latency — we are the first to achieve this level of performance with a fully local model. True to our mission of democratizing AI for everyone, we power our edge devices sustainably by integrating micro-hydroelectric and hydrokinetic systems that deliver reliable 24/7 baseload energy directly at the source with a near-zero operational carbon footprint (lifecycle emissions as low as 18–30 gCO₂/kWh). These run-of-river and in-stream turbines, requiring no large dams or reservoirs, combine with ultra-low-power edge hardware to eliminate 60–90% of cloud data traffic, slash overall energy consumption by up to 83%, and enable true off-grid, fish-friendly, resilient operation — delivering cutting-edge open-source AI inference while actively fighting for a cleaner, freer, and more sustainable technological future.    
           </p>
         </div>
         <div className="bg-white/5 p-6 rounded-lg hover:bg-white/10 transition-colors">
