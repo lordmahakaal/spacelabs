@@ -67,6 +67,7 @@ export default function Solutions() {
             <li>NEPSE and crypto markets with integrated quantitative analysis and research outputs</li>
             <li>Technical indicators: Ichimoku, Gann, Elliott Wave, Fibonacci</li>
             <li>Proprietary quantitative factor engine (momentum, value, quality, volatility)</li>
+            <li>ExQuant AI hedge fund analysis</li>
             <li>AI-driven price forecasts with risk and target levels</li>
             <li>Actionable buy, sell, and hold signals with confidence scores</li>
             <li>Automated symbol validation and audit trails</li>
