@@ -45,6 +45,35 @@ export default function Solutions() {
           </ul>
         </div>
         <div className="bg-white/5 p-6 rounded-lg hover:bg-white/10 transition-colors">
+          <h3 className="text-2xl font-bold mb-4">Backrub</h3>
+          <p className="text-gray-300 mb-4">
+            A unified search engine for discovery across media and research, available at{" "}
+            <a href="https://backrub.pro" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">backrub.pro</a>. Search spans:
+          </p>
+          <ul className="list-disc list-inside text-gray-300 space-y-2">
+            <li>Images and video</li>
+            <li>YouTube</li>
+            <li>Academic papers</li>
+            <li>Social media</li>
+          </ul>
+        </div>
+        <div className="bg-white/5 p-6 rounded-lg hover:bg-white/10 transition-colors">
+          <h3 className="text-2xl font-bold mb-4">ExQuant</h3>
+          <p className="text-gray-300 mb-4">
+            Real-time NEPSE and cryptocurrency data, quantitative analysis, and research-grade workflows—available at{" "}
+            <a href="https://exquant.pro" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">exquant.pro</a>. Capabilities include:
+          </p>
+          <ul className="list-disc list-inside text-gray-300 space-y-2">
+            <li>NEPSE and crypto markets with integrated quantitative analysis and research outputs</li>
+            <li>Technical indicators: Ichimoku, Gann, Elliott Wave, Fibonacci</li>
+            <li>Proprietary quantitative factor engine (momentum, value, quality, volatility)</li>
+            <li>AI-driven price forecasts with risk and target levels</li>
+            <li>Actionable buy, sell, and hold signals with confidence scores</li>
+            <li>Automated symbol validation and audit trails</li>
+            <li>Customizable Markdown and JSON reports for analysis and client presentations</li>
+          </ul>
+        </div>
+        <div className="bg-white/5 p-6 rounded-lg hover:bg-white/10 transition-colors">
           <h3 className="text-2xl font-bold mb-4">Inference-as-a-Service</h3>
           <p className="text-gray-300 mb-4">
             On-demand access to AI models for various applications, leveraging open-source models from HuggingFace,
