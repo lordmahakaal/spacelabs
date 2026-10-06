@@ -19,7 +19,11 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      // three's exports map is a bare string ("./examples/jsm/*"), so TypeScript
+      // cannot pair it with the @types/three declarations on its own. Point the
+      // postprocessing imports at the shipped .d.ts files explicitly.
+      "three/examples/jsm/*": ["./node_modules/@types/three/examples/jsm/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

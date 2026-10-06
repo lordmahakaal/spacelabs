@@ -1,7 +1,7 @@
 "use client"
 
-import { useState } from "react"
-import { Canvas } from "@react-three/fiber"
+import { useRef, useState } from "react"
+import { Canvas, type RootState } from "@react-three/fiber"
 import { Manrope } from "next/font/google"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
@@ -14,10 +14,29 @@ import Technology from "@/components/Technology"
 import Contact from "@/components/Contact"
 import Link from "next/link"
 
+import { useSceneActive, useSceneHealth } from "@/hooks/use-scene-health"
+import { CANVAS_RENDER_SETTINGS } from "@/lib/webgl-capability"
+
 const manrope = Manrope({ subsets: ["latin"] })
 
+const TABS = ["Solutions", "Industries", "Technology", "Contact"] as const
+
 export default function Home() {
-  const [activeTab, setActiveTab] = useState("home")
+  const [activeTab, setActiveTab] = useState<string>("home")
+  const canvasHostRef = useRef<HTMLDivElement>(null)
+  const sceneActive = useSceneActive(canvasHostRef)
+  const { ready, canRender, onContextLost } = useSceneHealth()
+
+  // A lost GPU context has to be handled on the canvas element itself: the event
+  // does not bubble to React, and the ErrorBoundary only sees render errors.
+  // `onCreated` is the reliable hook -- it fires once r3f has actually built the
+  // renderer, whereas querying for the canvas from an effect races the mount.
+  const handleCreated = (state: RootState) => {
+    const canvas = state.gl.domElement
+    canvas.addEventListener("webglcontextlost", onContextLost, { once: true })
+  }
+
+  const showScene = ready && canRender
 
   return (
     <div className={`relative w-full min-h-screen overflow-hidden bg-black text-white ${manrope.className}`}>
@@ -30,15 +49,18 @@ export default function Home() {
                 alt="Spacelabs Logo"
                 width={300}
                 height={120}
+                priority
+                sizes="(max-width: 768px) 48px, 80px"
                 className="w-auto h-12 md:h-20"
               />
             </Link>
           </div>
           <ul className="flex space-x-3 md:space-x-8 text-xs md:text-base">
-            {["Solutions", "Industries", "Technology", "Contact"].map((tab) => (
+            {TABS.map((tab) => (
               <li key={tab}>
                 <button
                   onClick={() => setActiveTab(tab.toLowerCase())}
+                  aria-current={activeTab === tab.toLowerCase() ? "page" : undefined}
                   className={`hover:text-gray-300 ${activeTab === tab.toLowerCase() ? "text-white" : "text-gray-400"}`}
                 >
                   {tab}
@@ -49,14 +71,29 @@ export default function Home() {
         </nav>
       </header>
 
-      <div className="absolute inset-0 z-0">
-        <Canvas shadows camera={{ position: [0, 0, 20], fov: 50 }}>
-          <ErrorBoundary fallback={<FallbackMessage message="3D scene failed to load" />}>
-            <Suspense fallback={<LoadingMessage message="Loading 3D scene..." />}>
-              <Scene />
-            </Suspense>
-          </ErrorBoundary>
-        </Canvas>
+      <div ref={canvasHostRef} className="absolute inset-0 z-0" aria-hidden="true">
+        {showScene ? (
+          <Canvas
+            shadows={CANVAS_RENDER_SETTINGS.shadows}
+            dpr={CANVAS_RENDER_SETTINGS.dpr}
+            gl={{
+              antialias: CANVAS_RENDER_SETTINGS.antialias,
+              alpha: CANVAS_RENDER_SETTINGS.alpha,
+              powerPreference: CANVAS_RENDER_SETTINGS.powerPreference,
+            }}
+            camera={{ position: [0, 0, 20], fov: 50 }}
+            frameloop={sceneActive ? "always" : "never"}
+            onCreated={handleCreated}
+          >
+            <ErrorBoundary fallback={null}>
+              <Suspense fallback={null}>
+                <Scene />
+              </Suspense>
+            </ErrorBoundary>
+          </Canvas>
+        ) : (
+          <SceneBackdrop />
+        )}
       </div>
 
       <AnimatePresence mode="wait">
@@ -106,19 +143,14 @@ export default function Home() {
   )
 }
 
-function FallbackMessage({ message }: { message: string }) {
+/**
+ * Static stand-in for the 3D scene. Pure CSS, so it costs nothing and cannot
+ * fail: used when WebGL is unavailable, when the GPU process was lost, or when
+ * the visitor prefers reduced motion.
+ */
+function SceneBackdrop() {
   return (
-    <div className="absolute inset-0 flex items-center justify-center text-white bg-black bg-opacity-50">
-      <p>{message}</p>
-    </div>
-  )
-}
-
-function LoadingMessage({ message }: { message: string }) {
-  return (
-    <div className="absolute inset-0 flex items-center justify-center text-white">
-      <p>{message}</p>
-    </div>
+    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(0,255,157,0.12),transparent_60%),radial-gradient(ellipse_at_bottom,rgba(120,80,255,0.1),transparent_60%)]" />
   )
 }
 
