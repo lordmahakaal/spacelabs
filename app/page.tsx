@@ -11,6 +11,7 @@ const Scene = dynamic(() => import("@/components/Scene"), { ssr: false })
 import Solutions from "@/components/Solutions"
 import Industries from "@/components/Industries"
 import Technology from "@/components/Technology"
+import Models from "@/components/Models"
 import Contact from "@/components/Contact"
 import Link from "next/link"
 
@@ -19,7 +20,7 @@ import { CANVAS_RENDER_SETTINGS } from "@/lib/webgl-capability"
 
 const manrope = Manrope({ subsets: ["latin"] })
 
-const TABS = ["Solutions", "Industries", "Technology", "Contact"] as const
+const TABS = ["Solutions", "Industries", "Technology", "Models", "Contact"] as const
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<string>("home")
@@ -41,8 +42,8 @@ export default function Home() {
   return (
     <div className={`relative w-full min-h-screen overflow-hidden bg-black text-white ${manrope.className}`}>
       <header className="fixed top-0 left-0 right-0 z-50 p-4 bg-black/80 backdrop-blur-md">
-        <nav className="flex justify-between items-center max-w-7xl mx-auto">
-          <div className="flex items-center gap-2 md:gap-4">
+        <nav className="flex justify-between items-center gap-3 max-w-7xl mx-auto">
+          <div className="flex items-center gap-2 md:gap-4 shrink-0">
             <Link href="/" onClick={() => setActiveTab("home")}>
               <Image
                 src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-01-19%20at%201.23.00%E2%80%AFPM%20(1).jpeg-NZoZj9kFAQGTgMvuCq1KQupInSwLyi.png"
@@ -55,13 +56,16 @@ export default function Home() {
               />
             </Link>
           </div>
-          <ul className="flex space-x-3 md:space-x-8 text-xs md:text-base">
+          {/* Five tabs sit beside the logo on a 393px viewport, so the gap is
+              tight on phones and the list can still scroll if a translation
+              ever gets longer. */}
+          <ul className="flex gap-2 md:gap-8 text-xs md:text-base overflow-x-auto min-w-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {TABS.map((tab) => (
-              <li key={tab}>
+              <li key={tab} className="shrink-0">
                 <button
                   onClick={() => setActiveTab(tab.toLowerCase())}
                   aria-current={activeTab === tab.toLowerCase() ? "page" : undefined}
-                  className={`hover:text-gray-300 ${activeTab === tab.toLowerCase() ? "text-white" : "text-gray-400"}`}
+                  className={`whitespace-nowrap hover:text-gray-300 ${activeTab === tab.toLowerCase() ? "text-white" : "text-gray-400"}`}
                 >
                   {tab}
                 </button>
@@ -103,7 +107,7 @@ export default function Home() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.3 }}
-          className="relative z-10 min-h-screen pt-20 md:pt-32 flex items-center justify-center px-2 md:px-4"
+          className="relative z-10 h-screen pt-20 md:pt-32 flex items-center justify-center px-2 md:px-4"
         >
           {activeTab === "home" && (
             <div className="text-center px-2">
@@ -136,6 +140,7 @@ export default function Home() {
           {activeTab === "solutions" && <Solutions />}
           {activeTab === "industries" && <Industries />}
           {activeTab === "technology" && <Technology />}
+          {activeTab === "models" && <Models />}
           {activeTab === "contact" && <Contact />}
         </motion.div>
       </AnimatePresence>

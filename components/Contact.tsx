@@ -45,7 +45,7 @@ export default function Contact() {
   }
 
   return (
-    <div className="w-full max-w-2xl mx-auto px-4 py-20">
+    <div className="w-full max-w-2xl mx-auto px-4 py-10 md:py-16 overflow-y-auto h-full min-h-0 overscroll-contain">
       <motion.h2
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
